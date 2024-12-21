@@ -180,30 +180,6 @@ func (pdf *PDF) Save(filename string) error {
 	return err
 }
 
-// Utility: Split text into words.
-func splitTextIntoWords(text string) []string {
-	return []string{} // Implement splitting logic
-}
-
-// Utility: Calculate text width based on font and size.
-func textWidth(text, font string, size float64) float64 {
-	return float64(len(text)) * size * 0.5 // Simplified width calculation
-}
-
-// Utility: Compress data using zlib.
-func compressData(data string) string {
-	var b bytes.Buffer
-	w := zlib.NewWriter(&b)
-	_, _ = w.Write([]byte(data))
-	w.Close()
-	return b.String()
-}
-
-// Utility: Base64 encode data.
-func base64Encode(data []byte) string {
-	return base64.StdEncoding.EncodeToString(data)
-}
-
 // AddTable adds a table to the PDF with adjustable rows and columns.
 func (pdf *PDF) AddTable(x, y float64, tableData [][]string, columnWidths []float64, alignments []string) {
 	// Default font size for table cells
