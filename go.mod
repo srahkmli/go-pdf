@@ -1,1 +1,3 @@
-module go-pdf
+module github.com/srahkmli/httpclient
+
+go 1.23.4

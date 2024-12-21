@@ -1,4 +1,4 @@
-package go_pdf
+package go-pdf
 
 import (
 	"bytes"
