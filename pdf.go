@@ -3,7 +3,6 @@ package pdf
 import (
 	"bytes"
 	"fmt"
-	"io"
 	"os"
 )
 
@@ -59,7 +58,7 @@ func NewPDF(pageWidth, pageHeight float64, unit string, margins ...float64) *PDF
 
 // AddPage starts a new page.
 func (pdf *PDF) AddPage() {
-	page := fmt.Sprintf("<< /Type /Page /Parent 1 0 R >>")
+	page := fmt.Sprintf("<< /Type /Page /Parent 1 0 R /MediaBox [0 0 %f %f] >>", pdf.pageWidth, pdf.pageHeight)
 	pdf.AddObject(page)
 	pdf.currentPage++
 }
@@ -95,33 +94,35 @@ func (pdf *PDF) Save(filename string) error {
 	pdf.writeTrailer()
 	pdf.writeEOF()
 
-	_, err = io.Copy(file, pdf.buffer)
+	_, err = file.Write(pdf.buffer.Bytes())
 	return err
 }
 
-func (pdf *PDF) writeHeader() {
-	pdf.buffer.WriteString("%PDF-1.7\n")
-}
-
 func (pdf *PDF) writeObjects() {
-	for _, obj := range pdf.objects {
+	for i, obj := range pdf.objects {
 		offset := pdf.buffer.Len()
 		pdf.objectOffsets = append(pdf.objectOffsets, offset)
-		pdf.buffer.WriteString(fmt.Sprintf("%d 0 obj\n%s\nendobj\n", len(pdf.objectOffsets), obj))
+		pdf.buffer.WriteString(fmt.Sprintf("%d 0 obj\n%s\nendobj\n", i+1, obj))
 	}
 }
 
 func (pdf *PDF) writeXref() {
-	pdf.buffer.WriteString("xref\n0 1\n0000000000 65535 f \n")
+	pdf.buffer.WriteString("xref\n")
+	pdf.buffer.WriteString(fmt.Sprintf("0 %d\n", len(pdf.objects)+1)) // Including the root object
+	pdf.buffer.WriteString("0000000000 65535 f \n")
 	for _, offset := range pdf.objectOffsets {
 		pdf.buffer.WriteString(fmt.Sprintf("%010d 00000 n \n", offset))
 	}
 }
 
 func (pdf *PDF) writeTrailer() {
-	pdf.buffer.WriteString(fmt.Sprintf("trailer\n<< /Size %d /Root 1 0 R >>\n", len(pdf.objectOffsets)))
+	pdf.buffer.WriteString(fmt.Sprintf("trailer\n<< /Size %d /Root 1 0 R >>\n", len(pdf.objects)+1))
 }
 
 func (pdf *PDF) writeEOF() {
-	pdf.buffer.WriteString("startxref\n%d\n%%EOF")
+	pdf.buffer.WriteString(fmt.Sprintf("startxref\n%d\n%%EOF\n", pdf.buffer.Len()))
+}
+
+func (pdf *PDF) writeHeader() {
+	pdf.buffer.WriteString("%PDF-1.7\n")
 }

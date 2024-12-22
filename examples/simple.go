@@ -6,7 +6,8 @@ import (
 )
 
 func simpleExample() {
-	pdfDoc := pdf.NewPDF(595.28, 841.89, "pt", 72, 72, 72, 72) // A4 size
+
+	pdfDoc := pdf.NewPDF(100.0, 100.0, "") // A4 size
 	pdfDoc.AddPage()
 
 	// Add text
@@ -14,10 +15,6 @@ func simpleExample() {
 
 	// Draw rectangle
 	pdfDoc.DrawRectangle(50, 50, 200, 100, "0 0 0", true)
-
-	// Add header and footer
-	pdfDoc.AddHeader("Example Header")
-	pdfDoc.AddFooter("Page 1")
 
 	// Set metadata
 	pdfDoc.SetMetadata(pdf.Metadata{

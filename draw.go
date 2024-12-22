@@ -4,18 +4,16 @@ import (
 	"fmt"
 )
 
-// DrawRectangle draws a rectangle on the PDF.
+// DrawRectangle draws a rectangle on the page.
 func (pdf *PDF) DrawRectangle(x, y, width, height float64, color string, fill bool) {
-	colorCmd := fmt.Sprintf("%s RG %s rg", color, color)
-	shapeCmd := ""
+	// Assuming color is in RGB format "r g b"
+	rect := fmt.Sprintf("%f %f %f %f re", x, y, width, height)
 	if fill {
-		shapeCmd = fmt.Sprintf("%.2f %.2f %.2f %.2f re f", x, y, width, height)
+		rect = fmt.Sprintf("%s f", rect)
 	} else {
-		shapeCmd = fmt.Sprintf("%.2f %.2f %.2f %.2f re S", x, y, width, height)
+		rect = fmt.Sprintf("%s S", rect)
 	}
-	cmd := fmt.Sprintf("q\n%s\n%s\nQ", colorCmd, shapeCmd)
-	stream := fmt.Sprintf("<< /Length %d >> stream\n%s\nendstream", len(cmd), cmd)
-	pdf.AddObject(stream)
+	pdf.AddObject(rect)
 }
 
 // DrawText writes text at a specific position on the page.
