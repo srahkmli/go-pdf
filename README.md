@@ -1,17 +1,17 @@
-# `go-pdf` - PDF Generator in Go
+# `go-newPDF` - PDF Generator in Go
 
-`go-pdf` is a Go library for creating PDF documents programmatically. It supports basic PDF functionalities such as adding text, images, tables, and custom layouts with adjustable margins. It also includes advanced features like text justification and custom table layouts.
+`go-newPDF` is a Go library for creating PDF documents programmatically. It supports basic PDF functionalities such as adding text, images, tables, and custom layouts with adjustable margins. It also includes advanced features like text justification and custom table layouts.
 
 ## Table of Contents
 1. [Features](#features)
 2. [Installation](#installation)
 3. [Usage](#usage)
-   - [Creating a New PDF](#creating-a-new-pdf)
+   - [Creating a New PDF](#creating-a-new-newPDF)
    - [Adding Text](#adding-text)
    - [Justified Text](#justified-text)
    - [Adding Tables](#adding-tables)
    - [Headers and Footers](#headers-and-footers)
-   - [Saving the PDF](#saving-the-pdf)
+   - [Saving the PDF](#saving-the-newPDF)
 4. [Code Explanation](#code-explanation)
    - [NewPDF](#newpdf)
    - [AddText](#addtext)
@@ -31,10 +31,10 @@
 
 ## Installation
 
-To install the `go-pdf` package, use the following Go command:
+To install the `go-newPDF` package, use the following Go command:
 
 ```bash
-go get github.com/srahkmli/go-pdf
+go get github.com/srahkmli/go-newPDF
 ```
 
 ## Usage
@@ -44,22 +44,22 @@ go get github.com/srahkmli/go-pdf
 To create a new PDF document with custom page size, unit of measurement, and margins:
 
 ```go
-package main
+package multicolumnText
 
 import (
 	"fmt"
-	"github.com/srahkmli/go-pdf"
+	"github.com/srahkmli/go-newPDF"
 )
 
-func main() {
+func multicolumnText() {
 	// Create a new PDF document with custom page size and margins
-	pdf := pdfgen.NewPDF(600, 800, "pt", 50, 50, 50, 50)
+	newPDF := pdfgen.NewPDF(600, 800, "pt", 50, 50, 50, 50)
 
 	// Add a page to the document
-	pdf.AddPage()
+	newPDF.AddPage()
 
 	// Save the PDF to a file
-	err := pdf.Save("example.pdf")
+	err := newPDF.Save("example.newPDF")
 	if err != nil {
 		fmt.Println("Error saving PDF:", err)
 	}
@@ -71,7 +71,7 @@ func main() {
 To add text to the PDF:
 
 ```go
-pdf.AddText(x, y, font, size, text)
+newPDF.AddText(x, y, font, size, text)
 ```
 
 - `x` and `y`: Position of the text in the PDF.
@@ -84,7 +84,7 @@ pdf.AddText(x, y, font, size, text)
 To add justified text:
 
 ```go
-pdf.AddTextJustified(x, y, width, font, size, text)
+newPDF.AddTextJustified(x, y, width, font, size, text)
 ```
 
 - `width`: Maximum width for the text to fit within.
@@ -98,7 +98,7 @@ The function splits the text into lines, adjusts the spacing between words, and 
 To add a table with adjustable rows and columns:
 
 ```go
-pdf.AddTable(x, y, tableData, columnWidths, alignments)
+newPDF.AddTable(x, y, tableData, columnWidths, alignments)
 ```
 
 - `tableData`: A 2D slice of strings containing the table data (rows and columns).
@@ -117,7 +117,7 @@ tableData := [][]string{
 columnWidths := []float64{100, 200, 100}
 alignments := []string{"left", "center", "right"}
 
-pdf.AddTable(50, 700, tableData, columnWidths, alignments)
+newPDF.AddTable(50, 700, tableData, columnWidths, alignments)
 ```
 
 ### Headers and Footers
@@ -125,8 +125,8 @@ pdf.AddTable(50, 700, tableData, columnWidths, alignments)
 To set headers and footers:
 
 ```go
-pdf.SetHeader(header)
-pdf.SetFooter(footer)
+newPDF.SetHeader(header)
+newPDF.SetFooter(footer)
 ```
 
 - `header`: The string for the page header.
@@ -137,7 +137,7 @@ pdf.SetFooter(footer)
 Once your document is complete, save it to a file:
 
 ```go
-err := pdf.Save("output.pdf")
+err := newPDF.Save("output.newPDF")
 if err != nil {
 	fmt.Println("Error saving PDF:", err)
 }

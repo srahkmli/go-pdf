@@ -17,3 +17,9 @@ func (pdf *PDF) DrawRectangle(x, y, width, height float64, color string, fill bo
 	stream := fmt.Sprintf("<< /Length %d >> stream\n%s\nendstream", len(cmd), cmd)
 	pdf.AddObject(stream)
 }
+
+// DrawText writes text at a specific position on the page.
+func (pdf *PDF) DrawText(x, y float64, text string) {
+	// Placeholder for drawing text logic
+	pdf.AddObject(fmt.Sprintf("BT /F1 12 Tf %f %f Td (%s) Tj ET", x, y, text))
+}
