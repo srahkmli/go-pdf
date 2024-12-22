@@ -57,11 +57,6 @@ func NewPDF(pageWidth, pageHeight float64, unit string, margins ...float64) *PDF
 	}
 }
 
-// SetMetadata sets metadata for the PDF document.
-func (pdf *PDF) SetMetadata(meta Metadata) {
-	pdf.metadata = meta
-}
-
 // AddPage starts a new page.
 func (pdf *PDF) AddPage() {
 	page := fmt.Sprintf("<< /Type /Page /Parent 1 0 R >>")
@@ -84,14 +79,6 @@ func (pdf *PDF) AddHeader(header string) {
 // AddFooter sets the footer text for the PDF.
 func (pdf *PDF) AddFooter(footer string) {
 	pdf.footers = footer
-}
-
-// EmbedImage embeds an image into the PDF.
-func (pdf *PDF) EmbedImage(x, y, width, height float64, imgPath string) error {
-	imageObj := fmt.Sprintf("<< /Type /XObject /Subtype /Image /Width %.2f /Height %.2f /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ...>>", width, height)
-	// Placeholder for actual image embedding logic.
-	pdf.AddObject(imageObj)
-	return nil
 }
 
 // Save writes the PDF to the specified file.
