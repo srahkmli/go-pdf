@@ -1,6 +1,6 @@
-# `go-newPDF` - PDF Generator in Go
+# `go-pdf` - PDF Generator in Go
 
-`go-newPDF` is a Go library for creating PDF documents programmatically. It supports basic PDF functionalities such as adding text, images, tables, and custom layouts with adjustable margins. It also includes advanced features like text justification and custom table layouts.
+`go-pdf` is a Go library for creating PDF documents programmatically. It supports basic PDF functionalities such as adding text, images, tables, and custom layouts with adjustable margins. It also includes advanced features like text justification and custom table layouts.
 
 ## Table of Contents
 1. [Features](#features)
@@ -31,10 +31,10 @@
 
 ## Installation
 
-To install the `go-newPDF` package, use the following Go command:
+To install the `go-pdf` package, use the following Go command:
 
 ```bash
-go get github.com/srahkmli/go-newPDF
+go get github.com/srahkmli/go-pdf
 ```
 
 ## Usage
@@ -48,7 +48,7 @@ package multicolumnText
 
 import (
 	"fmt"
-	"github.com/srahkmli/go-newPDF"
+	"github.com/srahkmli/go-pdf"
 )
 
 func multicolumnText() {
